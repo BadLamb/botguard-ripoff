@@ -18,13 +18,9 @@ const opCodes = {
     'exec': 87,
 }
 
-console.log(Object.values(opCodes))
-
 var unusedOpCodes = Array.apply(null, {length: 100})
                          .map(Number.call, Number)
-                         .filter(e => !e)
-
-console.log(unusedOpCodes)
+                         .filter(e => !Object.values(opCodes).includes(e))
 
 fs.readFile('test.asm', 'utf8', (err, data) => {
     var lines = data.split('\n')
@@ -54,6 +50,31 @@ fs.readFile('test.asm', 'utf8', (err, data) => {
 
         bytecode.push(toPush)
     })
+
+    /*
+    Shitty self decryption algorithm. Works like this:
+    ---------|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    When the program reaches the | it will decrypt another
+    segment.
+    ---------|--------|~~~~~~~~~~~~~~~~~~~~~
+    And so on
+    */
+
+    bytecode = bytecode.reverse()
+
+    bytecode.forEach((e, i) => {
+        if(RandomInt(0, 5) == 2){
+            var key = RandomInt(1, 255)
+
+            bytecode.slice(0, i).forEach((e, i) => {
+                bytecode[i] = bytecode[i].map(v => v ^ key)
+            })
+
+            console.log(bytecode);
+        }
+    })
+
+    bytecode = bytecode.reverse()
 
     bytecode.push(EOF)
     console.log(bytecode)
