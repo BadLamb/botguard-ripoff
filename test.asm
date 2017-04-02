@@ -1,5 +1,2 @@
-mov r18 99 
-xor r18 255 
-sub r18 1
-cmp r18 250
-jz 10
+exec "console.log('Hacking bitches since day 1'); r[1] = navigator.cookieEnabled ? 65 : 93;"
+xor r1 10

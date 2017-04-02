@@ -95,11 +95,7 @@
                         memory.constructor.prototype.bind.apply(String.constructor, ['memcpy', c]).apply("String").apply("toString")
                         break;
                 }
-
-                if (memory[base] == 255) {
-                    document.getElementById('coc').innerText = registers[0]
-                    break;
-                } else if (memory[base] == undefined) {
+                if (memory[base] == undefined) {
                     break;
                 }
 
